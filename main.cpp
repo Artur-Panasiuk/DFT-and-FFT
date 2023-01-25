@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const int MAX_ORDER = 5;
+const int MAX_ORDER = 4;
 const bool PRINT_COEFS = true;
 const std::complex<double> constI(0, 1);
 const double constE = exp(1.0);
@@ -35,17 +35,14 @@ complex<double>* fft(double arr[], const int arrSize) {
     complex<double>* result = new complex<double>[arrSize];
 
     if (arrSize == 1) {
-
-        for (int i = 0; i < arrSize; i++) {
-            result[i] = arr[i];
-        }
+        result[0] = arr[0];
 
         return result;
     }
 
-    complex<double>* store = new complex<double>[arrSize];
+    complex<double>* store = new complex<double>[arrSize/2];
 
-    for (int i = 0; i < arrSize; i++) {
+    for (int i = 0; i < arrSize/2; i++) {
         double alpha = -2 * M_PI * i / arrSize;
         double rel = cos(alpha), com = sin(alpha);
         complex<double> temp(rel, com);
@@ -70,6 +67,8 @@ complex<double>* fft(double arr[], const int arrSize) {
     delete[] store;
     delete[] x0;
     delete[] x1;
+    delete[] y0;
+    delete[] y1;
 
     return result;
 }
